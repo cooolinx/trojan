@@ -37,7 +37,7 @@ private:
 public:
     explicit Authenticator(const Config &config);
     bool auth(const std::string &password);
-    void record(const std::string &password, uint64_t download, uint64_t upload);
+    void record(const std::string &password, uint64_t download, uint64_t upload, const std::string address);
     ~Authenticator();
 };
 

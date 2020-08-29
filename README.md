@@ -1,12 +1,20 @@
 # trojan
 
-[![Build Status](https://dev.azure.com/GreaterFire/Trojan-GFW/_apis/build/status/trojan-gfw.trojan?branchName=master)](https://dev.azure.com/GreaterFire/Trojan-GFW/_build/latest?definitionId=5&branchName=master)
-
 An unidentifiable mechanism that helps you bypass GFW.
 
 Trojan features multiple protocols over `TLS` to avoid both active/passive detections and ISP `QoS` limitations.
 
 Trojan is not a fixed program or protocol. It's an idea, an idea that imitating the most common service, to an extent that it behaves identically, could help you get across the Great FireWall permanently, without being identified ever. We are the GreatER Fire; we ship Trojan Horses.
+
+## Enhanced Trojan
+
+### Visit Records
+
+Record visit details, such as user, client IP address and the last visit time of visitors, after each connection finishing (as the same timing as recording download/upload traffic usage) to the database, and will remove the records after expiration (expiration is configurable by `config.json`).
+
+This is useful for detect who is online and how many IP is used by this user.
+
+Redis is the best storage rather than Mariadb or MySQL, but for keeping the system simple, we use Mariadb/MySQL anyway.
 
 ## Documentations
 
