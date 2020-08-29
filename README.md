@@ -8,22 +8,32 @@ Trojan is not a fixed program or protocol. It's an idea, an idea that imitating 
 
 ## Enhanced Trojan
 
-### Visit Records
+### Access
 
 Record visit details, such as user, client IP address and the last visit time of visitors, after each connection finishing (as the same timing as recording download/upload traffic usage) to the database, and will remove the records after expiration (expiration is configurable by `config.json`).
 
-This is useful for detect who is online and how many IP is used by this user.
+This is useful for detecting who is online and how many IP is used by this user.
 
-Redis is the best storage rather than Mariadb or MySQL, but for keeping the system simple, we use Mariadb/MySQL anyway.
+Redis is the best storage for this case, but for keeping the system simple, we use Mariadb/MySQL anyway.
+
+The scheme of `access` table:
+
+```sql
+CREATE TABLE access (
+    id INT UNSIGNED NOT NULL AUTO_INCREMENT,
+    password VARCHAR(64) NOT NULL,
+    address VARCHAR(64) NOT NULL,
+    time DATETIME NOT NULL,
+    PRIMARY KEY (id),
+    UNIQUE KEY `password_address` (password, address)
+);
+```
 
 ## Documentations
 
+The original project is [trojan-gfw/trojan](https://github.com/trojan-gfw/trojan).
 An online documentation can be found [here](https://trojan-gfw.github.io/trojan/).  
 Installation guide on various platforms can be found in the [wiki](https://github.com/trojan-gfw/trojan/wiki/Binary-&-Package-Distributions).
-
-## Contributing
-
-See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Dependencies
 

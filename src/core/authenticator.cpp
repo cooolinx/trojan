@@ -85,8 +85,8 @@ void Authenticator::record(const string &password, uint64_t download, uint64_t u
         Log::log_with_date_time(mysql_error(&con), Log::ERROR);
     }
 
-    // Record visits, using password to avoid retrieving username from database
-    if (mysql_query(&con, ("REPLACE INTO visits (password, address, time) values ('" + password + "', '" + address + "', NOW())").c_str())) {
+    // Record access, using password to avoid retrieving username from database
+    if (mysql_query(&con, ("REPLACE INTO access (password, address, time) values ('" + password + "', '" + address + "', NOW())").c_str())) {
         Log::log_with_date_time(mysql_error(&con), Log::ERROR);
     }
 }
