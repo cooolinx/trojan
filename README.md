@@ -10,11 +10,9 @@ Trojan is not a fixed program or protocol. It's an idea, an idea that imitating 
 
 ### Access
 
-Record visit details, such as user, client IP address and the last visit time of visitors, after each connection finishing (as the same timing as recording download/upload traffic usage) to the database, and will remove the records after expiration (expiration is configurable by `config.json`).
+Record visit details, such as client IP address and the last visit time of visitor, after each connection finishing (as the same timing as recording download/upload traffic usage) to the database. Access records will remove automatically after expiration (expiration is default 10min and configured in MySQL scheme).
 
-This is useful for detecting who is online and how many IP is used by this user.
-
-Redis is the best storage for this case, but for keeping the system simple, we use Mariadb/MySQL anyway.
+This is useful for detecting who is online and how many IP is used by each user.
 
 The scheme of `access` table:
 
@@ -27,6 +25,12 @@ CREATE TABLE access (
     PRIMARY KEY (id),
     UNIQUE KEY `password_address` (password, address)
 );
+CREATE EVENT expire_access
+ON SCHEDULE EVERY 1 MINUTE
+DO
+    DELETE FROM access
+    WHERE TIMESTAMPDIFF(SECOND, time, NOW()) > 600;
+SET GLOBAL event_scheduler = ON;
 ```
 
 ## Documentations
