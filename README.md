@@ -19,8 +19,8 @@ The scheme of `access` table:
 ```sql
 CREATE TABLE access (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    password VARCHAR(64) NOT NULL,
-    address VARCHAR(64) NOT NULL,
+    password VARCHAR(56) NOT NULL,
+    address VARCHAR(15) NOT NULL,
     time DATETIME NOT NULL,
     download BIGINT UNSIGNED NOT NULL DEFAULT 0,
     upload BIGINT UNSIGNED NOT NULL DEFAULT 0,
