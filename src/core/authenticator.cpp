@@ -85,8 +85,10 @@ void Authenticator::record(const string &password, uint64_t download, uint64_t u
         Log::log_with_date_time(mysql_error(&con), Log::ERROR);
     }
 
-    // Record access, using password to avoid retrieving username from database
-    if (mysql_query(&con, ("INSERT INTO access (password, address, time, download, upload) values ('" + password + "', '" + address + "', DATE_FORMAT(NOW(), '%Y-%m-%d %H:00:00'), " + to_string(download) + ", " + to_string(upload) + ") ON DUPLICATE KEY UPDATE download = download + " + to_string(download) + ", upload = upload + " + to_string(upload)).c_str())) {
+    // Record access
+    if (mysql_query(&con, ("INSERT INTO access (username, address, time, download, upload) SELECT username, '" + address + "', DATE_FORMAT(NOW(), '%Y-%m-%d %H:00:00'), " + to_string(download) + ", " + to_string(upload) +
+        " FROM users WHERE password = '" + password + "'" +
+        " ON DUPLICATE KEY UPDATE download = access.download + " + to_string(download) + ", upload = access.upload + " + to_string(upload)).c_str())) {
         Log::log_with_date_time(mysql_error(&con), Log::ERROR);
     }
 }
