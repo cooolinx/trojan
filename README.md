@@ -19,13 +19,13 @@ The scheme of `access` table:
 ```sql
 CREATE TABLE access (
     id INT UNSIGNED NOT NULL AUTO_INCREMENT,
-    password VARCHAR(56) NOT NULL,
+    username VARCHAR(64) NOT NULL,
     address VARCHAR(15) NOT NULL,
     time DATETIME NOT NULL,
     download BIGINT UNSIGNED NOT NULL DEFAULT 0,
     upload BIGINT UNSIGNED NOT NULL DEFAULT 0,
     PRIMARY KEY (id),
-    UNIQUE KEY `password_address_time` (password, address, time)
+    UNIQUE KEY `username_address_time` (username, address, time)
 );
 ```
 
